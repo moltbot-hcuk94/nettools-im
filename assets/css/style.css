@@ -696,10 +696,31 @@ body {
   letter-spacing: 0.2em;
 }
 
-.cron-field-labels {
+.cron-fields-visual {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.cron-field-box {
   display: flex;
-  justify-content: space-around;
-  padding: 0 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cron-field-value {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  min-width: 60px;
+  text-align: center;
 }
 
 .cron-field-label {
@@ -708,7 +729,6 @@ body {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   text-align: center;
-  flex: 1;
 }
 
 /* Cron Description */
@@ -1096,8 +1116,19 @@ body {
     padding: 0.85rem 1rem;
   }
   
-  .cron-field-labels {
-    display: none;
+  .cron-fields-visual {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .cron-field-value {
+    font-size: 1rem;
+    padding: 0.4rem 0.5rem;
+    min-width: auto;
+  }
+  
+  .cron-field-label {
+    font-size: 0.6rem;
   }
   
   .field-breakdown {

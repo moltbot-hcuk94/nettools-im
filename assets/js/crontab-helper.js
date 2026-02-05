@@ -468,12 +468,30 @@
     document.getElementById('cron-description').classList.remove('hidden');
   }
 
+  function updateFieldBoxes(expr) {
+    const normalized = normalizeExpression(expr);
+    const parts = normalized.split(/\s+/);
+    
+    const fieldIds = ['field-minute', 'field-hour', 'field-dom', 'field-month', 'field-dow'];
+    fieldIds.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (el && parts[idx] !== undefined) {
+        el.textContent = parts[idx].toUpperCase();
+      } else if (el) {
+        el.textContent = '?';
+      }
+    });
+  }
+
   function updateResults(expr) {
     try {
       const parsed = parseCronExpression(expr);
       currentParsed = parsed;
       
       hideError();
+      
+      // Update visual field boxes
+      updateFieldBoxes(expr);
       
       // Update description
       const description = generateDescription(parsed);
@@ -491,6 +509,8 @@
     } catch (e) {
       showError(e.message);
       currentParsed = null;
+      // Still try to update the field boxes for visual feedback
+      updateFieldBoxes(expr);
     }
   }
 

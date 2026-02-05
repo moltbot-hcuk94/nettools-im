@@ -27,12 +27,27 @@ scripts:
           value="0 9 * * 1-5"
         >
       </div>
-      <div class="cron-field-labels">
-        <span class="cron-field-label">minute</span>
-        <span class="cron-field-label">hour</span>
-        <span class="cron-field-label">day (month)</span>
-        <span class="cron-field-label">month</span>
-        <span class="cron-field-label">day (week)</span>
+      <div class="cron-fields-visual">
+        <div class="cron-field-box">
+          <span class="cron-field-value" id="field-minute">0</span>
+          <span class="cron-field-label">minute</span>
+        </div>
+        <div class="cron-field-box">
+          <span class="cron-field-value" id="field-hour">9</span>
+          <span class="cron-field-label">hour</span>
+        </div>
+        <div class="cron-field-box">
+          <span class="cron-field-value" id="field-dom">*</span>
+          <span class="cron-field-label">day (month)</span>
+        </div>
+        <div class="cron-field-box">
+          <span class="cron-field-value" id="field-month">*</span>
+          <span class="cron-field-label">month</span>
+        </div>
+        <div class="cron-field-box">
+          <span class="cron-field-value" id="field-dow">1-5</span>
+          <span class="cron-field-label">day (week)</span>
+        </div>
       </div>
     </div>
     
