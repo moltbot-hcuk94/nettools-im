@@ -45,6 +45,19 @@ scripts:
             <div class="chmod-hint">Supports <code>u=</code>, <code>g=</code>, <code>o=</code> with any combination of <code>r</code>, <code>w</code>, <code>x</code>, <code>s</code>, <code>t</code>.</div>
           </div>
 
+          <div class="input-wrapper">
+            <label for="chmod-rwxinput">Permission string (ls -l style)</label>
+            <input
+              type="text"
+              id="chmod-rwxinput"
+              class="input-field"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="e.g. -rwxr-xr-x or drwxr-x---"
+            >
+            <div class="chmod-hint">Paste output from <code>ls -l</code>. The first character (file type) is optional.</div>
+          </div>
+
           <div class="input-wrapper chmod-type-wrapper">
             <label for="chmod-filetype">Type</label>
             <select id="chmod-filetype" class="select-field">

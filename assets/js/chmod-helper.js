@@ -207,6 +207,48 @@
     return state;
   }
 
+  // Parse rwx string like "-rwxr-xr-x" or "drwxr-x---"
+  function parseRwxString(raw) {
+    const s = (raw || '').trim();
+    if (!s) throw new Error('Enter a permission string like -rwxr-xr-x');
+
+    // Accept 9 or 10 characters. If 10, first char is file type (ignored for perms).
+    // Also allow variations: s/S for setuid/setgid in execute positions, t/T for sticky
+    let perms = s;
+    let filetype = 'file';
+
+    if (s.length === 10) {
+      const firstChar = s[0];
+      if (firstChar === 'd') filetype = 'dir';
+      perms = s.slice(1);
+    } else if (s.length !== 9) {
+      throw new Error('Permission string must be 9 or 10 characters (e.g. -rwxr-xr-x or rwxr-xr-x)');
+    }
+
+    // Validate format: each triplet is [r-][w-][xsStT-]
+    const pattern = /^[r-][w-][xsS-][r-][w-][xsS-][r-][w-][xtT-]$/;
+    if (!pattern.test(perms)) {
+      throw new Error('Invalid permission string format. Expected pattern like rwxr-xr-x');
+    }
+
+    const state = {
+      'u-r': perms[0] === 'r',
+      'u-w': perms[1] === 'w',
+      'u-x': perms[2] === 'x' || perms[2] === 's',
+      'u-s': perms[2] === 's' || perms[2] === 'S',
+      'g-r': perms[3] === 'r',
+      'g-w': perms[4] === 'w',
+      'g-x': perms[5] === 'x' || perms[5] === 's',
+      'g-s': perms[5] === 's' || perms[5] === 'S',
+      'o-r': perms[6] === 'r',
+      'o-w': perms[7] === 'w',
+      'o-x': perms[8] === 'x' || perms[8] === 't',
+      'o-t': perms[8] === 't' || perms[8] === 'T'
+    };
+
+    return { state, filetype };
+  }
+
   function specialSummary(c) {
     const bits = [];
     if (c['u-s']) bits.push('setuid');
@@ -231,7 +273,9 @@
 
     $('chmod-summary-special').textContent = specialSummary(c);
 
-    $('chmod-rwx').textContent = buildRwxString(c, filetype);
+    const rwxString = buildRwxString(c, filetype);
+    $('chmod-rwx').textContent = rwxString;
+    $('chmod-rwxinput').value = rwxString;
 
     $('chmod-cmd-octal').textContent = `chmod ${octal} <path>`;
     $('chmod-cmd-symbolic').textContent = `chmod ${symbolic} <path>`;
@@ -258,6 +302,20 @@
       const state = parseSymbolicAbsolute($('chmod-symbolic').value);
       ignoreInputEvents = true;
       writeChecks(state);
+      ignoreInputEvents = false;
+      updateUIFromChecks();
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function applyRwxInput() {
+    if (ignoreInputEvents) return;
+    try {
+      const { state, filetype } = parseRwxString($('chmod-rwxinput').value);
+      ignoreInputEvents = true;
+      writeChecks(state);
+      $('chmod-filetype').value = filetype;
       ignoreInputEvents = false;
       updateUIFromChecks();
     } catch (e) {
@@ -311,6 +369,12 @@
     $('chmod-symbolic').addEventListener('input', () => {
       clearError();
       applySymbolicInput();
+    });
+
+    // rwx string changes
+    $('chmod-rwxinput').addEventListener('input', () => {
+      clearError();
+      applyRwxInput();
     });
 
     // filetype changes only affect rwx string output
