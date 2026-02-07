@@ -337,6 +337,22 @@ body {
 .input-group .input-wrapper {
   flex: 1;
   min-width: 200px;
+  position: relative;
+}
+
+/* When input-wrapper has a hint, add padding and make hint absolute */
+.input-group .input-wrapper:has(.mac-hint),
+.input-group .input-wrapper:has(.chmod-hint) {
+  padding-bottom: 1.6rem;
+}
+
+.input-group .mac-hint,
+.input-group .chmod-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 0;
 }
 
 .input-group .input-wrapper + .btn,
@@ -415,32 +431,58 @@ body {
 
 /* Tab Navigation */
 .tab-nav {
+  position: relative;
   display: flex;
   gap: 0.25rem;
   margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  -ms-overflow-style: none;
 }
 
 .tab-nav::-webkit-scrollbar {
-  height: 4px;
-}
-
-.tab-nav::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-}
-
-.tab-nav::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 2px;
+  height: 0;
+  display: none;
 }
 
 .tab-btn {
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+/* Scroll indicator for tabs - gradient fade on mobile */
+.calculator-section {
+  position: relative;
+}
+
+.calculator-section::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 1.75rem;
+  width: 50px;
+  height: 2.5rem;
+  display: none;
+  background: linear-gradient(to right, transparent, var(--bg-secondary) 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.calculator-section::after {
+  content: '→';
+  position: absolute;
+  right: 0.25rem;
+  top: 1.95rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: none;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.7;
 }
 
 .tab-btn {
@@ -649,6 +691,12 @@ body {
   
   .sidebar-footer {
     display: none;
+  }
+  
+  /* Show scroll indicator on mobile for tabs */
+  .calculator-section::before,
+  .calculator-section::after {
+    display: block;
   }
   
   .input-group {
