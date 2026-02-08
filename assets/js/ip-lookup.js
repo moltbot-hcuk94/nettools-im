@@ -224,25 +224,27 @@
     };
   }
 
-  function updateRateLimitMeter(headers) {
+  function updateRateLimitMeter(rateLimit) {
     const card = $('rate-limit-card');
     const text = $('rate-limit-text');
     const bar = $('rate-limit-bar');
 
     if (!card || !text || !bar) return;
 
-    const limit = headers?.limit ? Number(headers.limit) : null;
-    const remaining = headers?.remaining ? Number(headers.remaining) : null;
+    const limit = rateLimit?.limit != null ? Number(rateLimit.limit) : null;
+    const remaining = rateLimit?.remaining != null ? Number(rateLimit.remaining) : null;
+    const used = rateLimit?.used != null ? Number(rateLimit.used) : null;
 
+    // If the API didn't include rate limit info, leave the meter blank.
     if (!Number.isFinite(limit) || !Number.isFinite(remaining)) {
       text.textContent = '-';
       bar.style.width = '0%';
       return;
     }
 
-    const used = Math.max(0, limit - remaining);
-    const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
-    text.textContent = `${used}/${limit} used today (${remaining} remaining)`;
+    const used2 = Number.isFinite(used) ? Math.max(0, used) : Math.max(0, limit - remaining);
+    const pct = limit > 0 ? Math.min(100, Math.round((used2 / limit) * 100)) : 0;
+    text.textContent = `${used2}/${limit} used today (${remaining} remaining)`;
     bar.style.width = `${pct}%`;
   }
 
@@ -269,7 +271,11 @@
         result = await fetchJson(`${API_BASE}/lookup?ip=${encodeURIComponent(ip)}`);
       }
 
-      updateRateLimitMeter(result.headers);
+      // Prefer API-provided rate limit values; fallback to headers for backwards compat.
+      updateRateLimitMeter(result.data?.rateLimit || {
+        limit: result.headers?.limit,
+        remaining: result.headers?.remaining
+      });
       populate(result.data);
       switchTab('lookup');
 
