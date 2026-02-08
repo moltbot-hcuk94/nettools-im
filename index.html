@@ -8,22 +8,6 @@ title: Home
   <p class="page-description">Free utilities for network administrators and IT professionals, built with privacy in mind. Tools only use third‑party services where absolutely necessary.</p>
 </header>
 
-<section class="summary-card" style="margin-bottom: 1.5rem;">
-  <div class="results-header" style="margin-bottom: 0.75rem;">
-    <h3 style="margin:0;">Privacy shields</h3>
-  </div>
-  <ul style="margin: 0 0 0 1.25rem; color: var(--text-secondary); font-size: 0.95rem;">
-    <li style="margin-bottom: 0.5rem;">
-      {% include privacy-shield.html privacy='browser' size=18 title='Runs entirely in your browser' %}
-      <strong>Green shield</strong> — runs entirely in your browser (inputs not sent to a server)
-    </li>
-    <li>
-      {% include privacy-shield.html privacy='thirdparty' size=18 title='Uses external services' %}
-      <strong>Blue shield</strong> — relies on external services (see each tool’s Privacy section for details)
-    </li>
-  </ul>
-</section>
-
 <section class="tools-grid">
   <a href="{{ '/tools/subnet-calculator/' | relative_url }}" class="tool-card">
     <div class="tool-card-icon">
@@ -40,10 +24,10 @@ title: Home
         <line x1="1" y1="14" x2="4" y2="14"/>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='browser' title='Runs entirely in your browser' %}
-      <h2 class="tool-card-title" style="margin:0;">Subnet Calculator</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='browser' size=22 title='Runs entirely in your browser' %}
     </div>
+    <h2 class="tool-card-title">Subnet Calculator</h2>
     <p class="tool-card-desc">Calculate all valid subnets and ranges from any IPv4 or IPv6 address. View CIDR blocks, subnet masks, and IP quantities.</p>
   </a>
   
@@ -54,10 +38,10 @@ title: Home
         <polyline points="12 6 12 12 16 14"/>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='browser' title='Runs entirely in your browser' %}
-      <h2 class="tool-card-title" style="margin:0;">Crontab Helper</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='browser' size=22 title='Runs entirely in your browser' %}
     </div>
+    <h2 class="tool-card-title">Crontab Helper</h2>
     <p class="tool-card-desc">Parse, validate, and understand cron expressions. See next execution times and build schedules interactively.</p>
   </a>
 
@@ -70,10 +54,10 @@ title: Home
         <path d="M7 16h6"/>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='browser' title='Runs entirely in your browser' %}
-      <h2 class="tool-card-title" style="margin:0;">Chmod Helper</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='browser' size=22 title='Runs entirely in your browser' %}
     </div>
+    <h2 class="tool-card-title">Chmod Helper</h2>
     <p class="tool-card-desc">Calculate Linux/Unix file permissions. Convert between octal, symbolic, and rwx strings (incl. setuid/setgid/sticky).</p>
   </a>
 
@@ -92,10 +76,10 @@ title: Home
         </g>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='browser' title='Runs entirely in your browser' %}
-      <h2 class="tool-card-title" style="margin:0;">Regex Helper</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='browser' size=22 title='Runs entirely in your browser' %}
     </div>
+    <h2 class="tool-card-title">Regex Helper</h2>
     <p class="tool-card-desc">Build, test, and understand regular expressions. Real-time pattern matching with explanations and syntax reference.</p>
   </a>
 
@@ -114,10 +98,10 @@ title: Home
         <path d="M16 18h0" stroke-width="3" stroke-linecap="round"/>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='browser' title='Runs entirely in your browser' %}
-      <h2 class="tool-card-title" style="margin:0;">MAC Vendor Lookup</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='browser' size=22 title='Runs entirely in your browser' %}
     </div>
+    <h2 class="tool-card-title">MAC Vendor Lookup</h2>
     <p class="tool-card-desc">Identify device manufacturers from MAC addresses using the official IEEE OUI database. Supports batch lookup, vendor search, and format conversion.</p>
   </a>
 
@@ -132,10 +116,10 @@ title: Home
         <path d="M15 10h0" stroke-width="4" stroke-linecap="round"/>
       </svg>
     </div>
-    <div class="tool-card-meta">
-      {% include privacy-shield.html privacy='thirdparty' title='Uses external services' %}
-      <h2 class="tool-card-title" style="margin:0;">IP Address Lookup</h2>
+    <div class="tool-card-privacy">
+      {% include privacy-shield.html privacy='thirdparty' size=22 title='Uses external services' %}
     </div>
+    <h2 class="tool-card-title">IP Address Lookup</h2>
     <p class="tool-card-desc">Look up IP geolocation, ASN, and registration details using RDAP and MaxMind (via a lightweight API backend).</p>
   </a>
 
@@ -153,4 +137,22 @@ title: Home
     <p class="tool-card-desc">Perform DNS lookups for A, AAAA, MX, TXT, and other record types.</p>
   </a>
   -->
+</section>
+
+<section class="privacy-legend" aria-label="Privacy shields">
+  <div class="privacy-legend-header">
+    <h3>Privacy shields</h3>
+  </div>
+  <ul class="privacy-legend-list">
+    <li>
+      {% include privacy-shield.html privacy='browser' size=18 title='Runs entirely in your browser' %}
+      <strong>Green shield</strong>
+      <span>— runs entirely in your browser (inputs not sent to a server)</span>
+    </li>
+    <li>
+      {% include privacy-shield.html privacy='thirdparty' size=18 title='Uses external services' %}
+      <strong>Blue shield</strong>
+      <span>— relies on external services (see each tool’s Privacy section for details)</span>
+    </li>
+  </ul>
 </section>
