@@ -207,7 +207,8 @@
     }
 
     if (!res.ok) {
-      const msg = body?.error || body?.message || `Request failed (${res.status})`;
+      // Prefer human-friendly message from API over machine error codes.
+      const msg = body?.message || body?.error || `Request failed (${res.status})`;
       const err = new Error(msg);
       err.status = res.status;
       err.body = body;
