@@ -370,17 +370,17 @@ body {
   margin-bottom: 0;
 }
 
-/* On narrower widths, let hint text take up layout space so wrapped buttons
-   don't overlap it (e.g. IP lookup "Copy Link" button on half-screen). */
-@media (max-width: 1100px) {
-  .input-group--hint-flow-on-wrap {
-    padding-bottom: 0;
-  }
+/* Allow an input hint to span the full row (below input + buttons) so wrapped
+   buttons don't overlap it, while keeping button alignment consistent. */
+.input-group .input-hint--fullrow {
+  position: static;
+  flex-basis: 100%;
+  margin-top: 0.5rem;
+}
 
-  .input-group--hint-flow-on-wrap .input-hint {
-    position: static;
-    margin-top: 0.5rem;
-  }
+/* IP lookup: disable the absolute-hint padding when using full-row hint */
+.input-group--hint-flow-on-wrap {
+  padding-bottom: 0;
 }
 
 .input-wrapper {
