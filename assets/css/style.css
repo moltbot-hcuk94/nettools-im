@@ -379,8 +379,9 @@ body {
   margin-bottom: 0;
 }
 
-/* IP lookup: disable the absolute-hint padding when using full-row hint */
-.input-group--hint-flow-on-wrap {
+/* IP lookup: disable the absolute-hint padding when using full-row hint
+   (must beat .input-group:has(.input-hint) specificity) */
+.input-group.input-group--hint-flow-on-wrap {
   padding-bottom: 0;
 }
 
